@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة أيقونات قابلة للتخصيص</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 20px;
+      color: #111827;
+    }
+    h1 {
+      text-align: center;
+      color: #1f2937;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    label {
+      font-weight: bold;
+    }
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 30px;
+      justify-items: center;
+    }
+    .icon-wrapper {
+      text-align: center;
+    }
+    svg {
+      cursor: pointer;
+    }
+    input[type="color"], input[type="number"], input[type="text"] {
+      padding: 6px;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      background: #1d4ed8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 مكتبة أيقونات قابلة للتخصيص</h1>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>الحجم (بالبكسل):</label>
+      <input type="number" id="iconSize" value="128" min="24" max="512">
+    </div>
+    <div class="control-group">
+      <label>لون 1:</label>
+      <input type="color" id="color1" value="#FF0000">
+    </div>
+    <div class="control-group">
+      <label>لون 2 (اختياري):</label>
+      <input type="color" id="color2" value="#000000">
+    </div>
+  </div>
+
+  <div class="icon-grid" id="iconGrid"></div>
+
+  <script>
+    const socialIcons = [
+      'mdi:youtube',
+      'mdi:instagram',
+      'mdi:facebook',
+      'mdi:twitter',
+      'mdi:linkedin',
+      'mdi:whatsapp',
+      'mdi:snapchat',
+      'mdi:pinterest',
+      'mdi:tiktok',
+      'mdi:telegram'
+    ];
+
+    const script = document.createElement('script');
+    script.src = 'https://code.iconify.design/3/iconify.min.js';
+    script.onload = () => {
+      socialIcons.forEach(name => addIcon(name));
+    };
+    document.head.appendChild(script);
+
+    function addIcon(name) {
+      const size = document.getElementById('iconSize').value;
+      const color1 = document.getElementById('color1').value;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'icon-wrapper';
+
+      const span = document.createElement('span');
+      span.className = 'iconify';
+      span.setAttribute('data-icon', name);
+      span.setAttribute('data-width', size);
+      span.setAttribute('data-height', size);
+      span.setAttribute('data-inline', 'false');
+      span.style.color = color1;
+
+      wrapper.appendChild(span);
+
+      const btn = document.createElement('button');
+      btn.textContent = 'تحميل PNG';
+      btn.onclick = () => downloadPNG(wrapper, name, size);
+
+      wrapper.appendChild(btn);
+      document.getElementById('iconGrid').appendChild(wrapper);
+
+      waitForIconify(() => {
+        if (window.Iconify && Iconify.scan) {
+          Iconify.scan(wrapper);
+        }
+      });
+    }
+
+    function waitForIconify(callback, retries = 10) {
+      if (window.Iconify && typeof Iconify.scan === 'function') {
+        callback();
+      } else if (retries > 0) {
+        setTimeout(() => waitForIconify(callback, retries - 1), 300);
+      } else {
+        alert("فشل تحميل مكتبة الأيقونات Iconify.");
+      }
+    }
+
+    function downloadPNG(wrapper, name, size) {
+      const svg = wrapper.querySelector('svg');
+      if (!svg) return alert('جارٍ تحميل الأيقونة، أعد المحاولة بعد لحظات.');
+
+      const serializer = new XMLSerializer();
+      const svgData = serializer.serializeToString(svg);
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = () => {
+        ctx.clearRect(0, 0, size, size);
+        ctx.drawImage(img, 0, 0, size, size);
+        URL.revokeObjectURL(url);
+        const pngUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = name.replace(/[:]/g, '_') + '.png';
+        link.href = pngUrl;
+        link.click();
+      };
+      img.src = url;
+    }
+  </script>
+</body>
+</html>
