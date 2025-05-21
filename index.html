@@ -7,26 +7,35 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
   <style>
     :root {
-      --bg-color: #eef2ff;
-      --card-bg: #ffffff;
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --accent: #ec4899;
+      --bg-color: linear-gradient(135deg, #667eea, #764ba2);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --primary: #7f5af0;
+      --primary-dark: #5a3eae;
+      --accent: #f67e7d;
       --text-main: #1f2937;
       --text-light: #4b5563;
-      --shadow-color: rgba(0, 0, 0, 0.1);
+      --shadow-color: rgba(0, 0, 0, 0.15);
+      --btn-bg: #7f5af0;
+      --btn-hover-bg: #5a3eae;
     }
+
     body.dark {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
+      --bg-color: linear-gradient(135deg, #0f172a, #1e293b);
+      --card-bg: rgba(30, 41, 59, 0.85);
       --primary: #60a5fa;
       --primary-dark: #3b82f6;
       --accent: #f472b6;
       --text-main: #f1f5f9;
       --text-light: #cbd5e1;
       --shadow-color: rgba(0, 0, 0, 0.5);
+      --btn-bg: #60a5fa;
+      --btn-hover-bg: #3b82f6;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg-color);
@@ -37,13 +46,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.5s ease, color 0.5s ease;
+      background-attachment: fixed;
     }
+
     h1 {
       color: var(--primary-dark);
       margin-bottom: 15px;
       text-align: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -53,44 +66,58 @@
       width: 100%;
       max-width: 600px;
     }
+
     .control-group {
       display: flex;
       flex-direction: column;
       gap: 5px;
       min-width: 130px;
     }
+
     label {
       font-weight: 700;
       font-size: 14px;
       color: var(--text-light);
     }
+
     input[type="text"],
     input[type="number"] {
       padding: 8px 10px;
       font-size: 14px;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid var(--primary);
       background: var(--card-bg);
       color: var(--text-main);
-      transition: border-color 0.3s;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    input:focus {
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
       border-color: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      outline: none;
     }
+
     .toggle-theme {
       margin-bottom: 15px;
-      background: var(--accent);
+      background: var(--btn-bg);
       color: white;
       border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 10px 18px;
+      border-radius: 12px;
       cursor: pointer;
       font-size: 14px;
-      transition: background-color 0.3s;
+      font-weight: 600;
+      transition: background-color 0.4s ease, transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(127, 90, 240, 0.6);
     }
+
     .toggle-theme:hover {
-      background: var(--primary);
+      background: var(--btn-hover-bg);
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(90, 62, 174, 0.8);
     }
+
     .icon-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -99,18 +126,20 @@
       width: 100%;
       max-width: 900px;
     }
+
     .icon-wrapper {
       text-align: center;
       background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 4px 10px var(--shadow-color);
-      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px var(--shadow-color);
+      padding: 18px 15px 20px;
       user-select: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
-      animation: fadeInUp 0.4s ease both;
+      animation: fadeInUp 0.5s ease both;
     }
+
     .icon-wrapper::before {
       content: "";
       position: absolute;
@@ -118,36 +147,58 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--primary)20%, var(--accent)20%);
+      background: linear-gradient(135deg, var(--primary) 30%, var(--accent) 70%);
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.4s ease;
       pointer-events: none;
+      border-radius: 16px;
     }
-    .icon-wrapper:hover::before { opacity: 0.2; }
-    .icon-wrapper:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 8px 20px var(--shadow-color); }
-    iconify-icon { cursor: default; user-select: none; }
+
+    .icon-wrapper:hover::before {
+      opacity: 0.25;
+    }
+
+    .icon-wrapper:hover {
+      transform: translateY(-8px) scale(1.07);
+      box-shadow: 0 10px 28px var(--shadow-color);
+    }
+
+    iconify-icon {
+      cursor: default;
+      user-select: none;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.15));
+    }
+
     .btn-group {
-      margin-top: 10px;
+      margin-top: 12px;
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
       justify-content: center;
     }
+
     button.download-btn {
-      background: var(--primary);
+      background: var(--btn-bg);
       color: white;
       border: none;
-      padding: 8px 12px;
-      font-size: 13px;
-      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 12px;
       cursor: pointer;
       flex: 1 1 45%;
-      min-width: 80px;
-      transition: background-color 0.3s, transform 0.2s;
+      min-width: 90px;
+      transition: background-color 0.4s ease, transform 0.25s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 14px rgba(127, 90, 240, 0.6);
     }
-    button.download-btn:hover { background: var(--accent); transform: scale(1.05); }
+
+    button.download-btn:hover {
+      background: var(--btn-hover-bg);
+      transform: scale(1.1);
+      box-shadow: 0 8px 22px rgba(90, 62, 174, 0.8);
+    }
+
     @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(10px); }
+      0% { opacity: 0; transform: translateY(15px); }
       100% { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -167,74 +218,190 @@
   </div>
   <div id="suggestions"></div>
   <div class="icon-grid" id="iconGrid"></div>
+
   <script>
     const arabicKeywords = {
-      'سهم': 'arrow', 'بحث': 'search', 'حذف': 'delete', 'إضافة': 'add',
-      'مستخدم': 'user', 'منزل': 'home', 'إعدادات': 'settings',
-      'كاميرا': 'camera', 'قلب': 'heart', 'نجمة': 'star',
-      'مشاركة': 'share', 'رسالة': 'message', 'موقع': 'location',
-      'إنستغرام': 'instagram', 'فيسبوك': 'facebook', 'يوتيوب': 'youtube',
-      'تويتر': 'twitter', 'واتساب': 'whatsapp', 'ملف': 'file',
-      'قفل': 'lock', 'جديد': 'new', 'تنزيل': 'download', 'موسيقى': 'music',
-      'هاتف': 'phone', 'دردشة': 'chat', 'تعليق': 'comment', 'قائمة': 'menu',
-      'سلة': 'cart', 'تقويم': 'calendar', 'خرائط': 'maps', 'إيموجي': 'emoji',
-      'صورة': 'image', 'مؤشر': 'pointer'
+      'سهم': 'arrow',
+      'بحث': 'search',
+      'حذف': 'delete',
+      'إضافة': 'add',
+      'مستخدم': 'user',
+      'منزل': 'home',
+      'إعدادات': 'settings',
+      'كاميرا': 'camera',
+      'قلب': 'heart',
+      'نجمة': 'star',
+      'مشاركة': 'share',
+      'رسالة': 'message',
+      'موقع': 'location',
+      'إنستغرام': 'instagram',
+      'فيسبوك': 'facebook',
+      'يوتيوب': 'youtube',
+      'تويتر': 'twitter',
+      'واتساب': 'whatsapp',
+      'ملف': 'file',
+      'قفل': 'lock',
+      'جديد': 'new',
+      'تنزيل': 'download',
+      'موسيقى': 'music',
+      'هاتف': 'phone',
+      'دردشة': 'chat',
+      'تعليق': 'comment',
+      'قائمة': 'menu',
+      'سلة': 'cart',
+      'تقويم': 'calendar',
+      'خرائط': 'maps',
+      'إيموجي': 'emoji',
+      'صورة': 'image',
+      'مؤشر': 'pointer'
     };
+
+    const commonSuggestions = ['سهم', 'بحث', 'مستخدم', 'إنستغرام', 'فيسبوك', 'يوتيوب', 'واتساب', 'مشاركة', 'قلب'];
+
     const grid = document.getElementById('iconGrid');
     const searchInput = document.getElementById('iconSearch');
     const sizeInput = document.getElementById('iconSize');
     const suggestionsDiv = document.getElementById('suggestions');
     let debounceTimer;
+
     function translateQuery(query) {
       return arabicKeywords[query.toLowerCase()] || query;
     }
+
     function renderSuggestions() {
       suggestionsDiv.innerHTML = '';
       commonSuggestions.forEach(term => {
         const btn = document.createElement('button');
         btn.textContent = term;
-        btn.onclick = () => { searchInput.value = term; performSearch(term); };
+        btn.onclick = () => {
+          searchInput.value = term;
+          performSearch(term);
+          suggestionsDiv.innerHTML = '';
+        };
         suggestionsDiv.appendChild(btn);
       });
     }
+
     searchInput.addEventListener('focus', renderSuggestions);
+
     searchInput.addEventListener('input', () => {
       clearTimeout(debounceTimer);
       const q = searchInput.value.trim();
-      if (!q) { grid.innerHTML = ''; return; }
+      if (!q) {
+        grid.innerHTML = '';
+        return;
+      }
       debounceTimer = setTimeout(() => performSearch(q), 350);
     });
+
     sizeInput.addEventListener('input', () => {
       const icons = Array.from(grid.querySelectorAll('iconify-icon')).map(el => el.getAttribute('icon'));
       if (icons.length) renderIcons(icons);
     });
+
     async function performSearch(query) {
       grid.innerHTML = '<p>جاري البحث...</p>';
       const tr = translateQuery(query);
       try {
         const res = await fetch(`https://api.iconify.design/search?query=${encodeURIComponent(tr)}&count=50`);
         const data = await res.json();
-        if (!data.icons || !data.icons.length) { grid.innerHTML = '<p>لا توجد أيقونات مطابقة.</p>'; return; }
+        if (!data.icons || !data.icons.length) {
+          grid.innerHTML = '<p>لا توجد أيقونات مطابقة.</p>';
+          return;
+        }
         renderIcons(data.icons);
       } catch {
         grid.innerHTML = '<p>فشل الاتصال بخدمة البحث.</p>';
       }
     }
+
     function renderIcons(list) {
       grid.innerHTML = '';
       const s = sizeInput.value;
       list.forEach(name => {
-        const w = document.createElement('div'); w.className = 'icon-wrapper';
-        const ic = document.createElement('iconify-icon'); ic.setAttribute('icon', name); ic.setAttribute('width', s); ic.setAttribute('height', s); w.appendChild(ic);
-        const bg = document.createElement('div'); bg.className = 'btn-group';
-        ['png','jpeg','webp'].forEach(fmt => { const b=document.createElement('button'); b.className='download-btn'; b.textContent=`تحميل ${fmt.toUpperCase()}`; b.onclick=()=>downloadRaster(ic,name,s,fmt); bg.appendChild(b);} );
-        const sv = document.createElement('button'); sv.className='download-btn'; sv.textContent='تحميل SVG'; sv.onclick=()=>downloadSVG(ic,name); bg.appendChild(sv);
-        w.appendChild(bg); grid.appendChild(w);
+        const w = document.createElement('div');
+        w.className = 'icon-wrapper';
+
+        const ic = document.createElement('iconify-icon');
+        ic.setAttribute('icon', name);
+        ic.setAttribute('width', s);
+        ic.setAttribute('height', s);
+        w.appendChild(ic);
+
+        const bg = document.createElement('div');
+        bg.className = 'btn-group';
+
+        ['png', 'jpeg', 'webp'].forEach(fmt => {
+          const b = document.createElement('button');
+          b.className = 'download-btn';
+          b.textContent = `تحميل ${fmt.toUpperCase()}`;
+          b.onclick = () => downloadRaster(ic, name, s, fmt);
+          bg.appendChild(b);
+        });
+
+        const sv = document.createElement('button');
+        sv.className = 'download-btn';
+        sv.textContent = 'تحميل SVG';
+        sv.onclick = () => downloadSVG(ic, name);
+        bg.appendChild(sv);
+
+        w.appendChild(bg);
+        grid.appendChild(w);
       });
     }
-    function downloadSVG(ic, nm) { const svgEl=ic.shadowRoot&&ic.shadowRoot.querySelector('svg'); if(!svgEl){alert('لا يوجد SVG');return;} const data=new XMLSerializer().serializeToString(svgEl); const blob=new Blob([data],{type:'image/svg+xml'}); const url=URL.createObjectURL(blob); triggerDownload(url,`${nm}.svg`); URL.revokeObjectURL(url); }
-    function downloadRaster(ic, nm, s, fmt) { const svgEl=ic.shadowRoot&&ic.shadowRoot.querySelector('svg'); if(!svgEl){alert('لا يوجد SVG');return;} const data=new XMLSerializer().serializeToString(svgEl); const c=document.createElement('canvas'); c.width=s;c.height=s; const ctx=c.getContext('2d'); const img=new Image(); const blob=new Blob([data],{type:'image/svg+xml'}); const u=URL.createObjectURL(blob); img.onload=()=>{ ctx.clearRect(0,0,s,s); ctx.drawImage(img,0,0,s,s); URL.revokeObjectURL(u); c.toBlob(b=>{ if(!b){alert('فشل التحويل');return;} const u2=URL.createObjectURL(b); triggerDownload(u2,`${nm}.${fmt}`); URL.revokeObjectURL(u2); }, fmt==='jpeg'?'image/jpeg':fmt==='webp'?'image/webp':'image/png'); }; img.src=u; }
-    function triggerDownload(u,f){const a=document.createElement('a');a.href=u;a.download=f;document.body.appendChild(a);a.click();document.body.removeChild(a);}  
+
+    function downloadSVG(ic, nm) {
+      const svgEl = ic.shadowRoot && ic.shadowRoot.querySelector('svg');
+      if (!svgEl) {
+        alert('لا يوجد SVG');
+        return;
+      }
+      const data = new XMLSerializer().serializeToString(svgEl);
+      const blob = new Blob([data], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      triggerDownload(url, `${nm}.svg`);
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadRaster(ic, nm, s, fmt) {
+      const svgEl = ic.shadowRoot && ic.shadowRoot.querySelector('svg');
+      if (!svgEl) {
+        alert('لا يوجد SVG');
+        return;
+      }
+      const data = new XMLSerializer().serializeToString(svgEl);
+      const c = document.createElement('canvas');
+      c.width = s;
+      c.height = s;
+      const ctx = c.getContext('2d');
+      const img = new Image();
+      const blob = new Blob([data], { type: 'image/svg+xml' });
+      const u = URL.createObjectURL(blob);
+      img.onload = () => {
+        ctx.clearRect(0, 0, s, s);
+        ctx.drawImage(img, 0, 0, s, s);
+        URL.revokeObjectURL(u);
+        c.toBlob(b => {
+          if (!b) {
+            alert('فشل التحويل');
+            return;
+          }
+          const u2 = URL.createObjectURL(b);
+          triggerDownload(u2, `${nm}.${fmt}`);
+          URL.revokeObjectURL(u2);
+        }, fmt === 'jpeg' ? 'image/jpeg' : fmt === 'webp' ? 'image/webp' : 'image/png');
+      };
+      img.src = u;
+    }
+
+    function triggerDownload(url, filename) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   </script>
 </body>
 </html>
