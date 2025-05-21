@@ -3,22 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>حمل ايقونات</title>
+  <title>حمل أيقونات</title>
   <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
   <style>
+    :root {
+      --bg-color: #eef2ff;
+      --card-bg: #ffffff;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --accent: #ec4899;
+      --text-main: #1f2937;
+      --text-light: #4b5563;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+    body.dark {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --primary: #60a5fa;
+      --primary-dark: #3b82f6;
+      --accent: #f472b6;
+      --text-main: #f1f5f9;
+      --text-light: #cbd5e1;
+      --shadow-color: rgba(0, 0, 0, 0.5);
+    }
+    * { box-sizing: border-box; }
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9fafb;
+      background: var(--bg-color);
       margin: 0;
       padding: 20px;
-      color: #111827;
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background 0.3s, color 0.3s;
     }
     h1 {
-      color: #1f2937;
+      color: var(--primary-dark);
       margin-bottom: 15px;
       text-align: center;
     }
@@ -40,36 +62,34 @@
     label {
       font-weight: 700;
       font-size: 14px;
+      color: var(--text-light);
     }
     input[type="text"],
     input[type="number"] {
-      padding: 6px 8px;
+      padding: 8px 10px;
       font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      outline-offset: 2px;
-      outline-color: #2563eb;
+      border-radius: 6px;
+      border: 1px solid var(--primary);
+      background: var(--card-bg);
+      color: var(--text-main);
+      transition: border-color 0.3s;
     }
-    #suggestions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      max-width: 600px;
+    input:focus {
+      border-color: var(--accent);
+    }
+    .toggle-theme {
       margin-bottom: 15px;
-    }
-    #suggestions button {
-      background: #2563eb;
+      background: var(--accent);
       color: white;
       border: none;
-      padding: 6px 12px;
-      border-radius: 20px;
+      padding: 8px 14px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 14px;
       transition: background-color 0.3s;
     }
-    #suggestions button:hover {
-      background: #1e40af;
+    .toggle-theme:hover {
+      background: var(--primary);
     }
     .icon-grid {
       display: grid;
@@ -81,12 +101,12 @@
     }
     .icon-wrapper {
       text-align: center;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 7px rgb(0 0 0 / 0.1);
-      padding: 12px 10px 15px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow-color);
+      padding: 15px;
       user-select: none;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       position: relative;
       overflow: hidden;
       animation: fadeInUp 0.4s ease both;
@@ -98,64 +118,46 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(30,64,175,0.1));
+      background: linear-gradient(135deg, var(--primary)20%, var(--accent)20%);
       opacity: 0;
       transition: opacity 0.3s;
       pointer-events: none;
     }
-    .icon-wrapper:hover::before {
-      opacity: 1;
-    }
-    .icon-wrapper:hover {
-      transform: translateY(-6px) scale(1.03);
-      box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
-    }
-    iconify-icon {
-      cursor: default;
-      user-select: none;
-    }
+    .icon-wrapper:hover::before { opacity: 0.2; }
+    .icon-wrapper:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 8px 20px var(--shadow-color); }
+    iconify-icon { cursor: default; user-select: none; }
     .btn-group {
-      margin-top: 8px;
+      margin-top: 10px;
       display: flex;
-      gap: 5px;
+      gap: 6px;
       flex-wrap: wrap;
       justify-content: center;
     }
     button.download-btn {
-      background: #2563eb;
+      background: var(--primary);
       color: white;
       border: none;
-      padding: 6px 10px;
+      padding: 8px 12px;
       font-size: 13px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      flex: 1 1 48%;
+      flex: 1 1 45%;
       min-width: 80px;
       transition: background-color 0.3s, transform 0.2s;
     }
-    button.download-btn:hover {
-      background: #1e40af;
-      transform: scale(1.05);
-    }
+    button.download-btn:hover { background: var(--accent); transform: scale(1.05); }
     @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-</body>
-  <h1>ستجد ما تريد ان بحثت باللغة الانجليزية</h1>
-
+  <h1>ستجد ما تريد إن بحثت باللغة الإنجليزية</h1>
+  <button class="toggle-theme" onclick="document.body.classList.toggle('dark')">تبديل الوضع</button>
   <div class="controls">
     <div class="control-group">
-      <label for="iconSearch">بحث (عربي أو افضل إنجليزي ):</label>
+      <label for="iconSearch">ابحث (بالإنجليزية أو العربية):</label>
       <input type="text" id="iconSearch" placeholder="مثلاً: سهم، مستخدم، إنستغرام..." autocomplete="off" />
     </div>
     <div class="control-group">
@@ -163,13 +165,9 @@
       <input type="number" id="iconSize" value="100" min="24" max="512" />
     </div>
   </div>
-
   <div id="suggestions"></div>
-
   <div class="icon-grid" id="iconGrid"></div>
-
   <script>
-    // ترجمة كلمات عربية إلى إنجليزية بحثية ضمنية
     const arabicKeywords = {
       'سهم': 'arrow', 'بحث': 'search', 'حذف': 'delete', 'إضافة': 'add',
       'مستخدم': 'user', 'منزل': 'home', 'إعدادات': 'settings',
@@ -180,183 +178,68 @@
       'قفل': 'lock', 'جديد': 'new', 'تنزيل': 'download', 'موسيقى': 'music',
       'هاتف': 'phone', 'دردشة': 'chat', 'تعليق': 'comment', 'قائمة': 'menu',
       'سلة': 'cart', 'تقويم': 'calendar', 'خرائط': 'maps', 'إيموجي': 'emoji',
-      'موقع': 'location', 'صورة': 'image', 'مؤشر': 'pointer'
+      'صورة': 'image', 'مؤشر': 'pointer'
     };
-
-
-
+    const commonSuggestions = [
+      'arrow', 'user', 'search', 'home', 'settings', 'camera', 'instagram',
+      'facebook', 'youtube', 'twitter', 'heart', 'star', 'download', 'lock',
+      'message', 'menu', 'calendar', 'phone', 'emoji', 'file', 'cart'
+    ];
     const grid = document.getElementById('iconGrid');
     const searchInput = document.getElementById('iconSearch');
     const sizeInput = document.getElementById('iconSize');
     const suggestionsDiv = document.getElementById('suggestions');
-
     let debounceTimer;
-
     function translateQuery(query) {
       return arabicKeywords[query.toLowerCase()] || query;
     }
-
     function renderSuggestions() {
       suggestionsDiv.innerHTML = '';
       commonSuggestions.forEach(term => {
         const btn = document.createElement('button');
         btn.textContent = term;
-        btn.onclick = () => {
-          searchInput.value = term;
-          performSearch(term);
-        };
+        btn.onclick = () => { searchInput.value = term; performSearch(term); };
         suggestionsDiv.appendChild(btn);
       });
     }
-
+    searchInput.addEventListener('focus', renderSuggestions);
     searchInput.addEventListener('input', () => {
       clearTimeout(debounceTimer);
-      const query = searchInput.value.trim();
-      if (!query) {
-        grid.innerHTML = '';
-        return;
-      }
-      debounceTimer = setTimeout(() => {
-        performSearch(query);
-      }, 350);
+      const q = searchInput.value.trim();
+      if (!q) { grid.innerHTML = ''; return; }
+      debounceTimer = setTimeout(() => performSearch(q), 350);
     });
-
     sizeInput.addEventListener('input', () => {
-      // يعيد رسم الأيقونات بالحجم الجديد لو فيه أيقونات حالياً
       const icons = Array.from(grid.querySelectorAll('iconify-icon')).map(el => el.getAttribute('icon'));
       if (icons.length) renderIcons(icons);
     });
-
     async function performSearch(query) {
       grid.innerHTML = '<p>جاري البحث...</p>';
-      const translated = translateQuery(query);
+      const tr = translateQuery(query);
       try {
-        const res = await fetch(`https://api.iconify.design/search?query=${encodeURIComponent(translated)}&count=50`);
+        const res = await fetch(`https://api.iconify.design/search?query=${encodeURIComponent(tr)}&count=50`);
         const data = await res.json();
-        if (!data.icons || data.icons.length === 0) {
-          grid.innerHTML = '<p>لا توجد أيقونات مطابقة.</p>';
-          return;
-        }
+        if (!data.icons || !data.icons.length) { grid.innerHTML = '<p>لا توجد أيقونات مطابقة.</p>'; return; }
         renderIcons(data.icons);
-      } catch (e) {
+      } catch {
         grid.innerHTML = '<p>فشل الاتصال بخدمة البحث.</p>';
       }
     }
-
-    function renderIcons(iconList) {
+    function renderIcons(list) {
       grid.innerHTML = '';
-      const size = sizeInput.value;
-      iconList.forEach(name => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'icon-wrapper';
-
-        const iconEl = document.createElement('iconify-icon');
-        iconEl.setAttribute('icon', name);
-        iconEl.setAttribute('width', size);
-        iconEl.setAttribute('height', size);
-        wrapper.appendChild(iconEl);
-
-        // أزرار التحميل
-        const btnGroup = document.createElement('div');
-        btnGroup.className = 'btn-group';
-
-        // تحميل PNG
-        const pngBtn = document.createElement('button');
-        pngBtn.className = 'download-btn';
-        pngBtn.textContent = 'تحميل PNG';
-        pngBtn.title = 'تحميل الصورة كـ PNG ثابتة';
-        pngBtn.onclick = () => downloadRaster(iconEl, name, size, 'png');
-        btnGroup.appendChild(pngBtn);
-
-        // تحميل JPEG
-        const jpegBtn = document.createElement('button');
-        jpegBtn.className = 'download-btn';
-        jpegBtn.textContent = 'تحميل JPEG';
-        jpegBtn.title = 'تحميل الصورة كـ JPEG ثابتة';
-        jpegBtn.onclick = () => downloadRaster(iconEl, name, size, 'jpeg');
-        btnGroup.appendChild(jpegBtn);
-
-        // تحميل WEBP
-        const webpBtn = document.createElement('button');
-        webpBtn.className = 'download-btn';
-        webpBtn.textContent = 'تحميل WEBP';
-        webpBtn.title = 'تحميل الصورة كـ WEBP ثابتة';
-        webpBtn.onclick = () => downloadRaster(iconEl, name, size, 'webp');
-        btnGroup.appendChild(webpBtn);
-
-        // تحميل SVG (يحافظ على الحركة لو موجودة)
-        const svgBtn = document.createElement('button');
-        svgBtn.className = 'download-btn';
-        svgBtn.textContent = 'تحميل SVG';
-        svgBtn.title = 'تحميل الأيقونة بصيغة SVG مع الحفاظ على التحريك إن وجد';
-        svgBtn.onclick = () => downloadSVG(iconEl, name);
-        btnGroup.appendChild(svgBtn);
-
-        wrapper.appendChild(btnGroup);
-
-        grid.appendChild(wrapper);
+      const s = sizeInput.value;
+      list.forEach(name => {
+        const w = document.createElement('div'); w.className = 'icon-wrapper';
+        const ic = document.createElement('iconify-icon'); ic.setAttribute('icon', name); ic.setAttribute('width', s); ic.setAttribute('height', s); w.appendChild(ic);
+        const bg = document.createElement('div'); bg.className = 'btn-group';
+        ['png','jpeg','webp'].forEach(fmt => { const b=document.createElement('button'); b.className='download-btn'; b.textContent=`تحميل ${fmt.toUpperCase()}`; b.onclick=()=>downloadRaster(ic,name,s,fmt); bg.appendChild(b);} );
+        const sv = document.createElement('button'); sv.className='download-btn'; sv.textContent='تحميل SVG'; sv.onclick=()=>downloadSVG(ic,name); bg.appendChild(sv);
+        w.appendChild(bg); grid.appendChild(w);
       });
     }
-
-    function downloadSVG(iconEl, name) {
-      const svg = iconEl.shadowRoot.querySelector('svg');
-      if (!svg) {
-        alert('لم يتم العثور على SVG للأيقونة.');
-        return;
-      }
-      const svgData = new XMLSerializer().serializeToString(svg);
-      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      triggerDownload(url, `${name}.svg`);
-      URL.revokeObjectURL(url);
-    }
-
-    function downloadRaster(iconEl, name, size, format) {
-      const svg = iconEl.shadowRoot.querySelector('svg');
-      if (!svg) {
-        alert('لم يتم العثور على SVG للأيقونة.');
-        return;
-      }
-      const svgData = new XMLSerializer().serializeToString(svg);
-      const canvas = document.createElement('canvas');
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-
-      let mimeType = 'image/png';
-      if (format === 'jpeg') mimeType = 'image/jpeg';
-      else if (format === 'webp') mimeType = 'image/webp';
-
-      img.onload = () => {
-        ctx.clearRect(0, 0, size, size);
-        ctx.drawImage(img, 0, 0, size, size);
-        URL.revokeObjectURL(url);
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            alert('حدث خطأ أثناء تحويل الصورة.');
-            return;
-          }
-          const url2 = URL.createObjectURL(blob);
-          triggerDownload(url2, `${name}.${format}`);
-          URL.revokeObjectURL(url2);
-        }, mimeType);
-      };
-      img.onerror = () => {
-        alert('فشل تحميل الصورة لتحويلها.');
-      };
-      img.src = url;
-    }
-
-    function triggerDownload(url, filename) {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+    function downloadSVG(ic, nm) { const svgEl=ic.shadowRoot&&ic.shadowRoot.querySelector('svg'); if(!svgEl){alert('لا يوجد SVG');return;} const data=new XMLSerializer().serializeToString(svgEl); const blob=new Blob([data],{type:'image/svg+xml'}); const url=URL.createObjectURL(blob); triggerDownload(url,`${nm}.svg`); URL.revokeObjectURL(url); }
+    function downloadRaster(ic, nm, s, fmt) { const svgEl=ic.shadowRoot&&ic.shadowRoot.querySelector('svg'); if(!svgEl){alert('لا يوجد SVG');return;} const data=new XMLSerializer().serializeToString(svgEl); const c=document.createElement('canvas'); c.width=s;c.height=s; const ctx=c.getContext('2d'); const img=new Image(); const blob=new Blob([data],{type:'image/svg+xml'}); const u=URL.createObjectURL(blob); img.onload=()=>{ ctx.clearRect(0,0,s,s); ctx.drawImage(img,0,0,s,s); URL.revokeObjectURL(u); c.toBlob(b=>{ if(!b){alert('فشل التحويل');return;} const u2=URL.createObjectURL(b); triggerDownload(u2,`${nm}.${fmt}`); URL.revokeObjectURL(u2); }, fmt==='jpeg'?'image/jpeg':fmt==='webp'?'image/webp':'image/png'); }; img.src=u; }
+    function triggerDownload(u,f){const a=document.createElement('a');a.href=u;a.download=f;document.body.appendChild(a);a.click();document.body.removeChild(a);}  
   </script>
+</body>
 </html>
