@@ -87,9 +87,27 @@
       padding: 12px 10px 15px;
       user-select: none;
       transition: transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.4s ease both;
+    }
+    .icon-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(30,64,175,0.1));
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .icon-wrapper:hover::before {
+      opacity: 1;
     }
     .icon-wrapper:hover {
-      transform: translateY(-6px);
+      transform: translateY(-6px) scale(1.03);
       box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
     }
     iconify-icon {
@@ -113,14 +131,26 @@
       cursor: pointer;
       flex: 1 1 48%;
       min-width: 80px;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
     }
     button.download-btn:hover {
       background: #1e40af;
+      transform: scale(1.05);
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
+</body>
   <h1>ستجد ما تريد ان بحثت باللغة الانجليزية</h1>
 
   <div class="controls">
@@ -328,9 +358,5 @@
       a.click();
       document.body.removeChild(a);
     }
-
-    // يتم إنشاء أزرار الاقتراحات
-    renderSuggestions();
   </script>
-</body>
 </html>
